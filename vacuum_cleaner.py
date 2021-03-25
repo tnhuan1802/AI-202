@@ -1,5 +1,5 @@
 from search import *
-
+from copy import deepcopy
 class VacuumCleanerProblem(SearchProblem):
     def __init__(self, initial):
         self.initial = initial
@@ -27,43 +27,44 @@ class VacuumCleanerState:
     
     def isGoal(self):
         _, rooms = self.state
-        for dirt in rooms:
-            if dirt == False:
-                return False
-        return True
+        temp = [True] * len(rooms)
+        return True if temp == rooms else False
 
     def legalMoves(self):
         vac_pos, rooms = self.state
         n_rooms = len(rooms)
         action = []
-        if vac_pos == 0:
-            action.append('right')
-        elif vac_pos == n_rooms - 1:
-            action.append('left')
+        if n_rooms == 1:
+            pass
         else:
-            action.append('left')
-            action.append('right')
+            if vac_pos == 0:
+                action.append('right')
+            elif vac_pos == n_rooms - 1:
+                action.append('left')
+            else:
+                action.append('left')
+                action.append('right')
 
         if rooms[vac_pos] == False:
             action.append('suck')
         return action
 
     def result(self, action):
-        vac_pos, rooms = self.state
+        vac_pos, rooms = deepcopy(self.state)
         n_rooms = len(rooms)
         if action == 'left': return VacuumCleanerState((vac_pos - 1, rooms))
-        if action == 'right': return VacuumCleanerState((vac_pos + 1, rooms))
+        if action == 'right':
+            
+            return VacuumCleanerState((vac_pos + 1, rooms))
         if action == 'suck':
             rooms[vac_pos] = True
-            print(vac_pos)
-            print(rooms)
             return VacuumCleanerState((vac_pos, rooms))
 
     def __str__(self):
-        return str(self.state[0]) + ' , ' + str(self.state[1])
+        return str(self.state)
 if __name__ == '__main__':
-    rooms = [False] * 3
-    vacuum = VacuumCleanerState((0, rooms))
+    rooms = [False] * 4
+    vacuum = VacuumCleanerState((2, rooms))
     problem = VacuumCleanerProblem(vacuum)
 
     path = bfs(problem)

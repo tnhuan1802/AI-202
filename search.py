@@ -114,10 +114,73 @@ def graphSearch(problem, frontier):
             return node.solution()
         explored.add(node.state)
         for state, action, step_cost in problem.getSuccessors(node.state):
-            
             child = Node(state, node, action, node.path_cost + step_cost)
             if child.state not in explored and child not in frontier.list:
+                # print(child)
                 frontier.push(child)
+
+class Graph():
+    def __init__(self, graph_dict = None, directed = True):
+        self.graph_dict = graph_dict or {}
+        self.directed = directed
+
+        if not directed:
+            self.make_undirected()
+
+    def make_undirected(self):
+        for a in list(self.graph_dict.keys()):
+            for (b, distance) in self.graph_dict[a].items():
+                self.connect(a, b, distance)
+
+    def connect(self, a, b, distance):
+        self.graph_dict.setdefault(a, {})[b] = distance
+
+        if not self.directed:
+            self.graph_dict.setdefault(b, {})[a] = distance
+
+    def get(self, a, b = None):
+        # get function return all links of a if b is None,
+        # else return the distance length between a and b
+        links = self.graph_dict.setdefault(a, {})
+
+        if b is None:
+            return links
+        else:
+            return links.get(b)
+
+    def nodes(self):
+        # node function is used to return all nodes in the graph
+        a = set([v for v in self.graph_dict.keys()])
+        b = set([v for u in self.graph_dict.values() for v in u.keys()])
+        return list(a.union(b))
+
+def UndirectedGraph(graph_dict = None):
+    return Graph(graph_dict = graph_dict, directed = False)
+
+# Used for graph problem
+
+class GraphProblem(SearchProblem):
+    def __init__(self, graph, initial, goal):
+        self.initial = initial
+        self.goal = goal
+        self.graph = graph
+
+    def getStartState(self):
+        return self.initial
+
+    def isGoalState(self, state):
+        return state == self.goal
+
+    def getSuccessors(self, state):
+        succ = []
+        for a in self.graph.graph_dict[state].keys():
+            succ.append((a, a, self.graph.get(state, a)))
+        return succ
+    def getCostOfActions(self, action):
+        return sum(action)
+
+    def result(self, state, action):
+        return action
 
 def depthFirstSearch(problem):
     fringe = util.Stack()
