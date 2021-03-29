@@ -112,11 +112,10 @@ def graphSearch(problem, frontier):
         # print(node.state.state)
         if problem.isGoalState(node.state):
             return node.solution()
-        explored.add(node.state)
+        explored.add(node.state.state)
         for state, action, step_cost in problem.getSuccessors(node.state):
             child = Node(state, node, action, node.path_cost + step_cost)
-            if child.state not in explored and child not in frontier.list:
-                # print(child)
+            if child.state.state not in explored and child not in frontier.list:
                 frontier.push(child)
 
 class Graph():
