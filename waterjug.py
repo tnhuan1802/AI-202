@@ -26,6 +26,12 @@ class WaterJugState:
         self.state = state
         self.capacities = capacities
 
+    def __eq__(self, other):
+        return self.state == other.state
+
+    def __hash__(self):
+        return hash(tuple(self.state))
+    
     def legalMoves(self):
         c_1, c_2 = self.capacities
         j_1, j_2 = self.state

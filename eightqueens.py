@@ -5,6 +5,12 @@ class NQueensState:
         self.state = tuple([-1] * N)
         self.N = N
 
+    def __eq__(self, other):
+        return self.state == other.state
+
+    def __hash__(self):
+        return hash(tuple(self.state))
+
     def isGoal(self):
         if self.state[-1] == -1:
             return False

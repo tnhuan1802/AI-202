@@ -29,5 +29,5 @@ if __name__ == "__main__":
         print(('After %d move%s: %s' % (i, ("", "s")[i>1], a)))
         print(curr)
 
-        input("Press return for the next state...")   # wait for key stroke
+        raw_input("Press return for the next state...")   # wait for key stroke
         i += 1

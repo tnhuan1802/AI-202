@@ -237,7 +237,6 @@ class GraphSearchTest(testClasses.TestCase):
         if error != None: raise Exception("Error in solution code: %s" % error)
         handle.write('solution: "%s"\n' % ' '.join(solution))
         handle.write('expanded_states: "%s"\n' % ' '.join(expanded_states))
-
         # reverse and write backwards solution
         search.REVERSE_PUSH = not search.REVERSE_PUSH
         solution, expanded_states, error = self.getSolInfo(search)

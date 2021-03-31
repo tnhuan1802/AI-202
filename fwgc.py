@@ -27,7 +27,12 @@ class RiverCrossingState():
     def __init__(self, state = (WEST, WEST, WEST, WEST)):
         self.state = state
 
+    def __eq__(self, other):
+        return self.state == other.state
 
+    def __hash__(self):
+        return hash(tuple(self.state))
+    
     def legalMoves(self):
         f, w , g ,c = deepcopy(self.state)
         # The actions can be west or east
@@ -68,7 +73,7 @@ class RiverCrossingState():
         return str(self.state)
 
 if __name__ == '__main__':
-    fwgc = RiverCrossingState((1,0,0,0))
+    fwgc = RiverCrossingState()
     problem = RiverCrossingProblem(fwgc)
 
     path = bfs(problem)

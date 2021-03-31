@@ -1,0 +1,12 @@
+class: "GraphSearchTest"
+algorithm: "breathFirstSearch"
+
+#      <start state> <actions> <end state> <cost>
+graph: """
+start_state: A
+goal_states: G
+A 0:A->B B 1.0
+A 1:A->C C 2.0
+A 2:A->D D 4.0
+C 0:C->G G 8.0
+"""

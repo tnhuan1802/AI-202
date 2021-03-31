@@ -25,9 +25,15 @@ class VacuumCleanerState:
     def __init__(self, state ):
         self.state = state
     
+    def __eq__(self, other):
+        return self.state == other.state
+
+    def __hash__(self):
+        return hash(tuple(self.state))
+
     def isGoal(self):
         _, rooms = self.state
-        temp = [True] * len(rooms)
+        temp = tuple([True] * len(rooms))
         return True if temp == rooms else False
 
     def legalMoves(self):
@@ -52,18 +58,19 @@ class VacuumCleanerState:
     def result(self, action):
         vac_pos, rooms = deepcopy(self.state)
         n_rooms = len(rooms)
+        list_rooms = list(rooms)
         if action == 'left': return VacuumCleanerState((vac_pos - 1, rooms))
         if action == 'right':
             
             return VacuumCleanerState((vac_pos + 1, rooms))
         if action == 'suck':
-            rooms[vac_pos] = True
-            return VacuumCleanerState((vac_pos, rooms))
+            list_rooms[vac_pos] = True
+            return VacuumCleanerState((vac_pos, tuple(list_rooms)))
 
     def __str__(self):
         return str(self.state)
 if __name__ == '__main__':
-    rooms = [False] * 4
+    rooms = tuple([False] * 4)
     vacuum = VacuumCleanerState((2, rooms))
     problem = VacuumCleanerProblem(vacuum)
 

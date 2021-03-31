@@ -19,6 +19,8 @@ Pacman agents (in searchAgents.py).
 
 import util
 
+REVERSE_PUSH = 0
+
 class SearchProblem:
     """
     This class outlines the structure of a search problem, but doesn't implement
@@ -109,13 +111,12 @@ def graphSearch(problem, frontier):
     while frontier:
         if frontier.isEmpty(): return None
         node = frontier.pop()
-        # print(node.state.state)
         if problem.isGoalState(node.state):
             return node.solution()
-        explored.add(node.state.state)
+        explored.add(node.state)
         for state, action, step_cost in problem.getSuccessors(node.state):
             child = Node(state, node, action, node.path_cost + step_cost)
-            if child.state.state not in explored and child not in frontier.list:
+            if child.state not in explored and child not in frontier.list:
                 frontier.push(child)
 
 class Graph():

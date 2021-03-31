@@ -37,6 +37,11 @@ class State:
             (0, 2, 1),
             (1, 1, 1)
         ]
+    def __eq__(self, other):
+        return self.state == other.state
+
+    def __hash__(self):
+        return hash(tuple(self.state))
 
     def isGoal(self):
         return self.state == (0, 0, 0)

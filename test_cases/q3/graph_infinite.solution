@@ -1,7 +1,7 @@
-# This is the solution file for test_cases/q3/graph_infinite.test.
+# This is the solution file for test_cases\q3\graph_infinite.test.
 # This solution is designed to support both right-to-left
 # and left-to-right implementations.
 solution: "0:A->B 1:B->C 1:C->G"
-expanded_states: "A B C"
+expanded_states: "A B A B C A B C A B C A A B C B A A A B C B B C A A A A B C B B B"
 rev_solution: "0:A->B 1:B->C 1:C->G"
-rev_expanded_states: "A B C"
+rev_expanded_states: "A B A B C A B C A B C A A B C B A A A B C B B C A A A A B C B B B"
